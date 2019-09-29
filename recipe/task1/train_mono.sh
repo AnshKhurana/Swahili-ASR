@@ -17,13 +17,13 @@ max_iter_inc=30 # Last iter to increase #Gauss on.
 initial_beam=6 # beam used in the first iteration (set smaller to speed up initialization)
 regular_beam=10 # beam used after the first iteration
 retry_beam=40
-totgauss=1000 # Target #Gaussians.
+totgauss=2000 # Target #Gaussians.
 careful=false
 boost_silence=1.0 # Factor by which to boost silence likelihoods in alignment
-realign_iters="1 2 3 4 5 6 7 8 9 10 12 14 16 18 20 23 26 29 32 35 38";
+realign_iters="1 2 3 4 5 6 7 8 9 10 12 14 16 18 20 23 26 29 32 35 38"
 config= # name of config file.
 stage=-4
-power=0.25 # exponent to determine number of gaussians from occurrence counts
+power=0.5 # exponent to determine number of gaussians from occurrence counts
 norm_vars=false # deprecated, prefer --cmvn-opts "--norm-vars=false"
 cmvn_opts=  # can be used to add extra options to cmvn.
 delta_opts= # can be used to add extra options to add-deltas

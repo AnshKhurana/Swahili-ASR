@@ -14,7 +14,7 @@
 ###############################################################
 #                   Configuring the ASR pipeline
 ###############################################################
-stage=0    # from which stage should this script start
+stage=3    # from which stage should this script start
 nj=4        # number of parallel jobs to run during training
 test_nj=2    # number of parallel jobs to run during decoding
 # the above two parameters are bounded by the number of speakers in each set
@@ -45,16 +45,16 @@ if [ $stage -le 3 ]; then
     echo "Monophone training"
 	task1/train_mono.sh --nj "$nj" --cmd "$train_cmd" data/train data/lang exp/mono
     echo "Monophone training done"
-    # (
-    # echo "Decoding the test set"
-    # utils/mkgraph.sh data/lang exp/mono exp/mono/graph
+    (
+    echo "Decoding the test set"
+    utils/mkgraph.sh data/lang exp/mono exp/mono/graph
   
-    # # This decode command will need to be modified when you 
-    # # want to use tied-state triphone models 
-    # steps/decode.sh --nj $test_nj --cmd "$decode_cmd" \
-    #   exp/mono/graph data/test exp/mono/decode_test
-    # echo "Monophone decoding done."
-    # ) &
+    # This decode command will need to be modified when you 
+    # want to use tied-state triphone models 
+    steps/decode.sh --nj $test_nj --cmd "$decode_cmd" \
+      exp/mono/graph data/test exp/mono/decode_test
+    echo "Monophone decoding done."
+    ) &
     
 fi
 
@@ -65,9 +65,14 @@ if [ $stage -le 4 ]; then
     steps/align_si.sh --nj $nj --cmd "$train_cmd" \
        data/train data/lang exp/mono exp/mono_ali
 	steps/train_deltas.sh --boost-silence 1.25  --cmd "$train_cmd"  \
-	   2000 20000 data/train data/lang exp/mono_ali exp/tri1
+	   $1 $2 data/train data/lang exp/mono_ali exp/tri1
     echo "Triphone training done"
-    (
+    
+fi
+
+# Stage 5: Decoding tied-state triphone models
+if [ $stage -le 5 ]; then
+  (
     echo "Decoding the test set"
     utils/mkgraph.sh data/lang exp/tri1 exp/tri1/graph
   
@@ -77,10 +82,7 @@ if [ $stage -le 4 ]; then
       exp/tri1/graph data/test exp/tri1/decode_test
     echo "Triphone decoding done."
     ) &
-
 fi
-
-# Stage 5: Decoding 
 
 
 wait;
