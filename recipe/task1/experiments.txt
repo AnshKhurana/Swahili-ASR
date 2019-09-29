@@ -1,0 +1,7 @@
+-- Experiment for variation in task 1 parameters -- 
+
+1. Default
+
+WER: 55.58
+
+2. Saksham best

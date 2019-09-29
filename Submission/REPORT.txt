@@ -1,0 +1,27 @@
+Task 1
+
+Task 2
+
+Task 3
+
+* To be confirmed with code *
+
+The two paramters taken by train_deltas.sh is
+1. Number of leaves in the decision tree: This parameter defines the number of sets of states that will be sharing the same likelihood model. That is for tying X Triphone models which have the middle monophone as M, if number of leaves are K, these X states (left context/right context..) will be partitioned K sets which share the same GMM parameters.
+
+2. Total number of Gaussians: This is the sum of over all GMM likelihood models over all tied states of the Tied-State HMM model.
+That is, if there are x sets of tied-states, where each tied-state set shares a y component GMM - Total number of Gaussians = x*y
+
+
+
+Task 4
+
+
+
+Task 5
+
+Task 6
+
+Task 7
+
+Task 8

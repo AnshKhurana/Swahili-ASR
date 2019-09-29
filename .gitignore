@@ -1,0 +1,7 @@
+.DS_Store
+recipe/exp/*
+recipe/exp/**
+recipe/data/*
+recipe/data/**
+recipe/corpus/*
+recipe/corpus/**
