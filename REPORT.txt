@@ -1,2 +1,23 @@
 Task 2
 As the task heading suggests, these indicate the lexical idiosyncrasies found in Swahili i.e different African groups might have different way of speaking the same phone and hence the demarcations B,E,I,S represents the 4 different ways (and in some cases 5) in which a phone can be spoken.
+
+Task 4
+We tried several smoothing models but all lead to performance reductions. The following were the various models and corresponding commands
+4-gram Kneser-ney (modified) smoothed model
+ngram-count -read grams.txt -order 4 -lm demolm.lm -kndiscount1 -kndiscount2 -kndiscount3 -kndiscount4
+WER --> 48.81%
+
+Then we tried 4-gram Kneser-ney (modified) smoothed model with interpolation
+ngram-count -read grams.txt -order 4 -lm demolm.lm -kndiscount1 -kndiscount2 -kndiscount3 -kndiscount4 -interpolation 4
+WER --> 48.35%
+
+We also tried written bell smoothing 3-gram
+ngram-count -read grams.txt -lm demolm.lm -wbdiscount1 -wbdiscount2 -wbdiscount3
+WER --> 48.45%
+
+Finally we tried 2-gram Kneser-ney with interpolation
+ngram-count -read grams.txt -order 2 -lm demolm.lm -kndiscount1 -kndiscount2 -interpolate 2
+WER--> 48.26%
+
+
+
