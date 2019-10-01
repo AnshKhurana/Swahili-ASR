@@ -32,3 +32,9 @@ Run 5
 WER: 46.53
 
 # With the task 1 best value
+
+Default
+
+%WER 51.92
+%WER 46.53
+
