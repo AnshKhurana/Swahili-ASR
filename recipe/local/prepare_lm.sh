@@ -5,4 +5,4 @@
 cd data
 #convert to FST format for Kaldi
 arpa2fst --disambig-symbol=#0 --read-symbol-table=lang/words.txt \
-  local/swahili.small.arpa lang/G.fst
+  local/$1 lang/G.fst
