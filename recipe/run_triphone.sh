@@ -27,7 +27,7 @@ if [ $stage -le 1 ]; then
   local/prepare_data.sh train test
   local/prepare_dict.sh
   utils/prepare_lang.sh data/local/dict "<UNK>" data/local/lang data/lang
-  local/prepare_lm.sh 
+  local/prepare_lm.sh swahilli.small.arpa
 fi
 
 # Feature extraction

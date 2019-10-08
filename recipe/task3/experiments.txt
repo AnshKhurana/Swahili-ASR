@@ -33,7 +33,7 @@ WER: 46.53
 
 # With the task 1 best value
 
-Default
+Best
 
 %WER 51.92
 %WER 46.53

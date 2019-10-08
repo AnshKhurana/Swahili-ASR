@@ -27,7 +27,7 @@ if [ $stage -le 1 ]; then
   local/prepare_data.sh train test
   local/prepare_dict.sh
   utils/prepare_lang.sh data/local/dict "<UNK>" data/local/lang data/lang
-  local/prepare_lm.sh demo.arpa
+  local/prepare_lm.sh swahili.big.arpa
 fi
 
 # Feature extraction
@@ -45,7 +45,7 @@ if [ $stage -le 3 ]; then
     echo "Monophone training"
 	task1/train_mono.sh --nj "$nj" --cmd "$train_cmd" data/train data/lang exp/mono
     echo "Monophone training done"
-    (
+    ( 
     echo "Decoding the test set"
     utils/mkgraph.sh data/lang exp/mono exp/mono/graph
   
