@@ -1,0 +1,366 @@
+Preparing data and training language models
+Preparing train and test data
+make wav.scp for train test
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data/train ~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data/test ~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+copy spk2utt, utt2spk, text for train test
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/data/local ~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+Preparing data OK.
+Dictionary preparation succeeded
+utils/prepare_lang.sh data/local/dict <UNK> data/local/lang data/lang
+Checking data/local/dict/silence_phones.txt ...
+--> reading data/local/dict/silence_phones.txt
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/local/dict/silence_phones.txt is OK
+
+Checking data/local/dict/optional_silence.txt ...
+--> reading data/local/dict/optional_silence.txt
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/local/dict/optional_silence.txt is OK
+
+Checking data/local/dict/nonsilence_phones.txt ...
+--> reading data/local/dict/nonsilence_phones.txt
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/local/dict/nonsilence_phones.txt is OK
+
+Checking disjoint: silence_phones.txt, nonsilence_phones.txt
+--> disjoint property is OK.
+
+Checking data/local/dict/lexicon.txt
+--> reading data/local/dict/lexicon.txt
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/local/dict/lexicon.txt is OK
+
+Checking data/local/dict/lexiconp.txt
+--> reading data/local/dict/lexiconp.txt
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/local/dict/lexiconp.txt is OK
+
+Checking lexicon pair data/local/dict/lexicon.txt and data/local/dict/lexiconp.txt
+--> lexicon pair data/local/dict/lexicon.txt and data/local/dict/lexiconp.txt match
+
+Checking data/local/dict/extra_questions.txt ...
+--> data/local/dict/extra_questions.txt is empty (this is OK)
+--> SUCCESS [validating dictionary directory data/local/dict]
+
+prepare_lang.sh: validating output directory
+utils/validate_lang.pl data/lang
+Checking existence of separator file
+separator file data/lang/subword_separator.txt is empty or does not exist, deal in word case.
+Checking data/lang/phones.txt ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/lang/phones.txt is OK
+
+Checking words.txt: #0 ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/lang/words.txt is OK
+
+Checking disjoint: silence.txt, nonsilence.txt, disambig.txt ...
+--> silence.txt and nonsilence.txt are disjoint
+--> silence.txt and disambig.txt are disjoint
+--> disambig.txt and nonsilence.txt are disjoint
+--> disjoint property is OK
+
+Checking sumation: silence.txt, nonsilence.txt, disambig.txt ...
+--> found no unexplainable phones in phones.txt
+
+Checking data/lang/phones/context_indep.{txt, int, csl} ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> 20 entry/entries in data/lang/phones/context_indep.txt
+--> data/lang/phones/context_indep.int corresponds to data/lang/phones/context_indep.txt
+--> data/lang/phones/context_indep.csl corresponds to data/lang/phones/context_indep.txt
+--> data/lang/phones/context_indep.{txt, int, csl} are OK
+
+Checking data/lang/phones/nonsilence.{txt, int, csl} ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> 144 entry/entries in data/lang/phones/nonsilence.txt
+--> data/lang/phones/nonsilence.int corresponds to data/lang/phones/nonsilence.txt
+--> data/lang/phones/nonsilence.csl corresponds to data/lang/phones/nonsilence.txt
+--> data/lang/phones/nonsilence.{txt, int, csl} are OK
+
+Checking data/lang/phones/silence.{txt, int, csl} ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> 20 entry/entries in data/lang/phones/silence.txt
+--> data/lang/phones/silence.int corresponds to data/lang/phones/silence.txt
+--> data/lang/phones/silence.csl corresponds to data/lang/phones/silence.txt
+--> data/lang/phones/silence.{txt, int, csl} are OK
+
+Checking data/lang/phones/optional_silence.{txt, int, csl} ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> 1 entry/entries in data/lang/phones/optional_silence.txt
+--> data/lang/phones/optional_silence.int corresponds to data/lang/phones/optional_silence.txt
+--> data/lang/phones/optional_silence.csl corresponds to data/lang/phones/optional_silence.txt
+--> data/lang/phones/optional_silence.{txt, int, csl} are OK
+
+Checking data/lang/phones/disambig.{txt, int, csl} ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> 9 entry/entries in data/lang/phones/disambig.txt
+--> data/lang/phones/disambig.int corresponds to data/lang/phones/disambig.txt
+--> data/lang/phones/disambig.csl corresponds to data/lang/phones/disambig.txt
+--> data/lang/phones/disambig.{txt, int, csl} are OK
+
+Checking data/lang/phones/roots.{txt, int} ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> 40 entry/entries in data/lang/phones/roots.txt
+--> data/lang/phones/roots.int corresponds to data/lang/phones/roots.txt
+--> data/lang/phones/roots.{txt, int} are OK
+
+Checking data/lang/phones/sets.{txt, int} ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> 40 entry/entries in data/lang/phones/sets.txt
+--> data/lang/phones/sets.int corresponds to data/lang/phones/sets.txt
+--> data/lang/phones/sets.{txt, int} are OK
+
+Checking data/lang/phones/extra_questions.{txt, int} ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> 9 entry/entries in data/lang/phones/extra_questions.txt
+--> data/lang/phones/extra_questions.int corresponds to data/lang/phones/extra_questions.txt
+--> data/lang/phones/extra_questions.{txt, int} are OK
+
+Checking data/lang/phones/word_boundary.{txt, int} ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> 164 entry/entries in data/lang/phones/word_boundary.txt
+--> data/lang/phones/word_boundary.int corresponds to data/lang/phones/word_boundary.txt
+--> data/lang/phones/word_boundary.{txt, int} are OK
+
+Checking optional_silence.txt ...
+--> reading data/lang/phones/optional_silence.txt
+--> data/lang/phones/optional_silence.txt is OK
+
+Checking disambiguation symbols: #0 and #1
+--> data/lang/phones/disambig.txt has "#0" and "#1"
+--> data/lang/phones/disambig.txt is OK
+
+Checking topo ...
+
+Checking word_boundary.txt: silence.txt, nonsilence.txt, disambig.txt ...
+--> data/lang/phones/word_boundary.txt doesn't include disambiguation symbols
+--> data/lang/phones/word_boundary.txt is the union of nonsilence.txt and silence.txt
+--> data/lang/phones/word_boundary.txt is OK
+
+Checking word-level disambiguation symbols...
+--> data/lang/phones/wdisambig.txt exists (newer prepare_lang.sh)
+Checking word_boundary.int and disambig.int
+--> generating a 100 word/subword sequence
+--> resulting phone sequence from L.fst corresponds to the word sequence
+--> L.fst is OK
+--> generating a 67 word/subword sequence
+--> resulting phone sequence from L_disambig.fst corresponds to the word sequence
+--> L_disambig.fst is OK
+
+Checking data/lang/oov.{txt, int} ...
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> 1 entry/entries in data/lang/oov.txt
+--> data/lang/oov.int corresponds to data/lang/oov.txt
+--> data/lang/oov.{txt, int} are OK
+
+--> data/lang/L.fst is olabel sorted
+--> data/lang/L_disambig.fst is olabel sorted
+--> data/lang/G.fst is ilabel sorted
+--> data/lang/G.fst has 49615 states
+--> data/lang/G.fst is determinizable
+--> utils/lang/check_g_properties.pl successfully validated data/lang/G.fst
+--> utils/lang/check_g_properties.pl succeeded.
+--> Testing determinizability of L_disambig . G
+--> L_disambig . G is determinizable
+--> SUCCESS [validating lang directory data/lang]
+steps/make_mfcc.sh --nj 20 --cmd run.pl data/train exp/make_mfcc/train mfcc
+steps/make_mfcc.sh: moving data/train/feats.scp to data/train/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/train
+steps/make_mfcc.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+steps/make_mfcc.sh: Succeeded creating MFCC features for train
+steps/compute_cmvn_stats.sh data/train exp/make_mfcc/train mfcc
+Succeeded creating CMVN stats for train
+steps/make_mfcc.sh --nj 20 --cmd run.pl data/test exp/make_mfcc/test mfcc
+steps/make_mfcc.sh: moving data/test/feats.scp to data/test/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/test
+steps/make_mfcc.sh: [info]: no segments file exists: assuming wav.scp indexed by utterance.
+steps/make_mfcc.sh: Succeeded creating MFCC features for test
+steps/compute_cmvn_stats.sh data/test exp/make_mfcc/test mfcc
+Succeeded creating CMVN stats for test
+Monophone training
+task1/train_mono.sh --nj 4 --cmd run.pl data/train data/lang exp/mono
+task1/train_mono.sh: Initializing monophone system.
+task1/train_mono.sh: Compiling training graphs
+task1/train_mono.sh: Aligning data equally (pass 0)
+task1/train_mono.sh: Pass 1
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 2
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 3
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 4
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 5
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 6
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 7
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 8
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 9
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 10
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 11
+task1/train_mono.sh: Pass 12
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 13
+task1/train_mono.sh: Pass 14
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 15
+task1/train_mono.sh: Pass 16
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 17
+task1/train_mono.sh: Pass 18
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 19
+task1/train_mono.sh: Pass 20
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 21
+task1/train_mono.sh: Pass 22
+task1/train_mono.sh: Pass 23
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 24
+task1/train_mono.sh: Pass 25
+task1/train_mono.sh: Pass 26
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 27
+task1/train_mono.sh: Pass 28
+task1/train_mono.sh: Pass 29
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 30
+task1/train_mono.sh: Pass 31
+task1/train_mono.sh: Pass 32
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 33
+task1/train_mono.sh: Pass 34
+task1/train_mono.sh: Pass 35
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 36
+task1/train_mono.sh: Pass 37
+task1/train_mono.sh: Pass 38
+task1/train_mono.sh: Aligning data
+task1/train_mono.sh: Pass 39
+steps/diagnostic/analyze_alignments.sh --cmd run.pl data/lang exp/mono
+steps/diagnostic/analyze_alignments.sh: analyze_phone_length_stats.py failed, but ignoring the error (it's just for diagnostics)
+steps/diagnostic/analyze_alignments.sh: see stats in exp/mono/log/analyze_alignments.log
+800 warnings in exp/mono/log/update.*.log
+2436 warnings in exp/mono/log/align.*.*.log
+137 warnings in exp/mono/log/acc.*.*.log
+exp/mono: nj=4 align prob=-102.38 over 1.11h [retry=3.8%, fail=0.1%] states=128 gauss=1993
+task1/train_mono.sh: Done training monophone system in exp/mono
+Monophone training done
+Triphone training
+Decoding the test set
+steps/align_si.sh --nj 4 --cmd run.pl data/train data/lang exp/mono exp/mono_ali
+steps/align_si.sh: feature type is delta
+steps/align_si.sh: aligning data in data/train using model from exp/mono, putting alignments in exp/mono_ali
+steps/diagnostic/analyze_alignments.sh --cmd run.pl data/lang exp/mono_ali
+steps/diagnostic/analyze_alignments.sh: analyze_phone_length_stats.py failed, but ignoring the error (it's just for diagnostics)
+steps/diagnostic/analyze_alignments.sh: see stats in exp/mono_ali/log/analyze_alignments.log
+steps/align_si.sh: done aligning data.
+steps/train_deltas.sh --boost-silence 1.25 --cmd run.pl 5000 7000 data/train data/lang exp/mono_ali exp/tri1
+steps/train_deltas.sh: accumulating tree stats
+steps/train_deltas.sh: getting questions for tree-building, via clustering
+steps/train_deltas.sh: building the tree
+WARNING (gmm-init-model[5.5.490~1-b2f64]:InitAmGmm():gmm-init-model.cc:55) Tree has pdf-id 15 with no stats; corresponding phone list: 65 66 67 68 
+** The warnings above about 'no stats' generally mean you have phones **
+** (or groups of phones) in your phone set that had no corresponding data. **
+** You should probably figure out whether something went wrong, **
+** or whether your data just doesn't happen to have examples of those **
+** phones. **
+steps/train_deltas.sh: converting alignments from exp/mono_ali to use current tree
+steps/train_deltas.sh: compiling graphs of transcripts
+steps/train_deltas.sh: training pass 1
+steps/train_deltas.sh: training pass 2
+steps/train_deltas.sh: training pass 3
+steps/train_deltas.sh: training pass 4
+-0.0496024 -0.0609076
+[info]: LG not stochastic.
+steps/train_deltas.sh: training pass 5
+steps/train_deltas.sh: training pass 6
+steps/train_deltas.sh: training pass 7
+steps/train_deltas.sh: training pass 8
+steps/train_deltas.sh: training pass 9
+-0.0496024 -0.0609076
+[info]: CLG not stochastic.
+steps/train_deltas.sh: training pass 10
+steps/train_deltas.sh: aligning data
+steps/train_deltas.sh: training pass 11
+steps/train_deltas.sh: training pass 12
+steps/train_deltas.sh: training pass 13
+steps/train_deltas.sh: training pass 14
+steps/train_deltas.sh: training pass 15
+steps/train_deltas.sh: training pass 16
+steps/train_deltas.sh: training pass 17
+steps/train_deltas.sh: training pass 18
+steps/train_deltas.sh: training pass 19
+steps/train_deltas.sh: training pass 20
+steps/train_deltas.sh: aligning data
+steps/train_deltas.sh: training pass 21
+steps/train_deltas.sh: training pass 22
+steps/train_deltas.sh: training pass 23
+0.00027799 -0.112166
+HCLGa is not stochastic
+steps/train_deltas.sh: training pass 24
+steps/train_deltas.sh: training pass 25
+steps/train_deltas.sh: training pass 26
+steps/train_deltas.sh: training pass 27
+steps/train_deltas.sh: training pass 28
+steps/train_deltas.sh: training pass 29
+steps/train_deltas.sh: training pass 30
+steps/train_deltas.sh: aligning data
+steps/train_deltas.sh: training pass 31
+steps/train_deltas.sh: training pass 32
+steps/train_deltas.sh: training pass 33
+steps/train_deltas.sh: training pass 34
+steps/diagnostic/analyze_alignments.sh --cmd run.pl data/lang exp/tri1
+steps/diagnostic/analyze_alignments.sh: analyze_phone_length_stats.py failed, but ignoring the error (it's just for diagnostics)
+steps/diagnostic/analyze_alignments.sh: see stats in exp/tri1/log/analyze_alignments.log
+1 warnings in exp/tri1/log/build_tree.log
+118 warnings in exp/tri1/log/acc.*.*.log
+276 warnings in exp/tri1/log/update.*.log
+1 warnings in exp/tri1/log/questions.log
+85 warnings in exp/tri1/log/init_model.log
+170 warnings in exp/tri1/log/align.*.*.log
+exp/tri1: nj=4 align prob=-100.05 over 1.11h [retry=4.0%, fail=0.3%] states=848 gauss=7011 tree-impr=4.02
+steps/train_deltas.sh: Done training system with delta+delta-delta features in exp/tri1
+Triphone training done
+Decoding the test set
+0 -0.0609076
+[info]: CLG not stochastic.
+steps/decode.sh --nj 2 --cmd run.pl exp/mono/graph data/test exp/mono/decode_test
+decode.sh: feature type is delta
+0.333743 -0.139088
+HCLGa is not stochastic
+steps/decode.sh --nj 2 --cmd run.pl exp/tri1/graph data/test exp/tri1/decode_test
+decode.sh: feature type is delta
+steps/diagnostic/analyze_lats.sh --cmd run.pl exp/tri1/graph exp/tri1/decode_test
+Triphone decoding done.
+steps/diagnostic/analyze_lats.sh --cmd run.pl exp/mono/graph exp/mono/decode_test
+Monophone decoding done.
+%WER 51.10 [ 559 / 1094, 25 ins, 138 del, 396 sub ] exp/mono/decode_test/wer_9
+%WER 45.61 [ 499 / 1094, 35 ins, 146 del, 318 sub ] exp/tri1/decode_test/wer_13
+%WER 47.53 [ 520 / 1094, 25 ins, 197 del, 298 sub ] exp/tri1/decode_test_rescored/wer_12

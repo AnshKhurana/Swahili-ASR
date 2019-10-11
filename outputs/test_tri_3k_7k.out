@@ -1,0 +1,53 @@
+Preparing data and training language models
+Preparing train and test data
+make wav.scp for train test
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data/train ~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data/test ~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+copy spk2utt, utt2spk, text for train test
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/data/local ~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+~/Documents/CS753/assgmt2/kaldi/egs/assgmt2/recipe/corpus/data
+Preparing data OK.
+Dictionary preparation succeeded
+utils/prepare_lang.sh data/local/dict <UNK> data/local/lang data/lang
+Checking data/local/dict/silence_phones.txt ...
+--> reading data/local/dict/silence_phones.txt
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/local/dict/silence_phones.txt is OK
+
+Checking data/local/dict/optional_silence.txt ...
+--> reading data/local/dict/optional_silence.txt
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/local/dict/optional_silence.txt is OK
+
+Checking data/local/dict/nonsilence_phones.txt ...
+--> reading data/local/dict/nonsilence_phones.txt
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/local/dict/nonsilence_phones.txt is OK
+
+Checking disjoint: silence_phones.txt, nonsilence_phones.txt
+--> disjoint property is OK.
+
+Checking data/local/dict/lexicon.txt
+--> reading data/local/dict/lexicon.txt
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/local/dict/lexicon.txt is OK
+
+Checking data/local/dict/lexiconp.txt
+--> reading data/local/dict/lexiconp.txt
+--> text seems to be UTF-8 or ASCII, checking whitespaces
+--> text contains only allowed whitespaces
+--> data/local/dict/lexiconp.txt is OK
+
+Checking lexicon pair data/local/dict/lexicon.txt and data/local/dict/lexiconp.txt
+--> lexicon pair data/local/dict/lexicon.txt and data/local/dict/lexiconp.txt match
+
+Checking data/local/dict/extra_questions.txt ...
+--> data/local/dict/extra_questions.txt is empty (this is OK)
+--> SUCCESS [validating dictionary directory data/local/dict]
+

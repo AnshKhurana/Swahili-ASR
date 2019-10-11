@@ -1,4 +1,4 @@
-#!/bin/bash
+  #!/bin/bash
 # Copyright 2012  Johns Hopkins University (Author: Daniel Povey)
 # Apache 2.0
 
