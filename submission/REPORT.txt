@@ -79,8 +79,11 @@ numleaves	totgauss	Result
 3000		7000		-
 3000		15000		-
 5000		5000		%WER 46.25
+5000		7000		%WER 45.61
+5000		9000		%WER 46.53
+6000		10000		-
 
-
+- @Saksham fill the '-'
 
 * To be confirmed with code *
 
@@ -90,12 +93,10 @@ The two paramters taken by train_deltas.sh is
 2. Total number of Gaussians: This is the sum of over all GMM likelihood models over all tied states of the Tied-State HMM model.
 That is, if there are x sets of tied-states, where each tied-state set shares a y component GMM - Total number of Gaussians = x*y
 
-
-
 Task 4
 
 
-// Re-do with updated best parameters
+// Re-do with updated best parameters @Aman
 // Have to improve upon this
 // Report perplexity too
 
@@ -119,6 +120,8 @@ WER--> 48.26%
 
 
 Task 5
+
+LM rescoring is faster.
 
 
 
