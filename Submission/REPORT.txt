@@ -1,4 +1,9 @@
 Note: All the results have been obtained on Ubuntu 18.04 LTS and Intel 64 bit processors
+Team Members
+
+Aman Kansal  170050027
+Ansh Khurana 170050035
+Saksham Goel 170050045
 
 Task 1
 

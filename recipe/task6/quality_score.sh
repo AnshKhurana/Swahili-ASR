@@ -51,7 +51,7 @@ $cmd LMWT=$min_lmwt:$max_lmwt $dir/scoring/log/best_path.LMWT.log \
   lattice-add-penalty --word-ins-penalty=$word_ins_penalty ark:- ark:- \| \
   lattice-best-path --word-symbol-table=$symtab \
     ark:- ark,t:$dir/scoring/LMWT.tra || exit 1;
-# run loop over quality segments - Step 2
+# run loop over quality segments - Step
 
 #g
 # Note: the double level of quoting for the sed command
@@ -95,13 +95,13 @@ $cmd LMWT=$min_lmwt:$max_lmwt $dir/scoring/log/score.LMWT.log \
 
 # Printing score after decoding on different quality data
 echo -n "(g) "
-for x in $dir*; do [ -d $x ] && grep WER $x/werg_* | utils/best_wer.sh; done
+for x in $dir; do [ -d $x ] && grep WER $x/werg_* | utils/best_wer.sh; done
 echo -n "(l) "
-for x in $dir*; do [ -d $x ] && grep WER $x/werl_* | utils/best_wer.sh; done
+for x in $dir; do [ -d $x ] && grep WER $x/werl_* | utils/best_wer.sh; done
 echo -n "(m) "
-for x in $dir*; do [ -d $x ] && grep WER $x/werm_* | utils/best_wer.sh; done
+for x in $dir; do [ -d $x ] && grep WER $x/werm_* | utils/best_wer.sh; done
 echo -n "(n) "
-for x in $dir*; do [ -d $x ] && grep WER $x/wern_* | utils/best_wer.sh; done
+for x in $dir; do [ -d $x ] && grep WER $x/wern_* | utils/best_wer.sh; done
 # Computing the best WERs
 # g,l,m,n
 exit 0;
