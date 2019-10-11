@@ -5,3 +5,7 @@ recipe/data/*
 recipe/data/**
 recipe/corpus/*
 recipe/corpus/**
+recipe/mfcc/
+recipe/mfcc/*
+recipe/mfcc/*.ark
+recipe/mfcc/**
