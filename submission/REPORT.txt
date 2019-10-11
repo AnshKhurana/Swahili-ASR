@@ -1,0 +1,142 @@
+Note: All the results have been obtained on Ubuntu 18.04 LTS and Intel 64 bit processors
+Team Members
+
+Aman Kansal  170050027
+Ansh Khurana 170050035
+Saksham Goel 170050045
+
+Task 1
+
+Optimal Tuned features:
+# Begin configuration section.
+nj=4
+cmd=run.pl
+scale_opts="--transition-scale=1.0 --acoustic-scale=0.1 --self-loop-scale=0.1"
+num_iters=40    # Number of iterations of training
+max_iter_inc=30 # Last iter to increase #Gauss on.
+initial_beam=6 # beam used in the first iteration (set smaller to speed up initialization)
+regular_beam=10 # beam used after the first iteration
+retry_beam=40
+totgauss=2000 # Target #Gaussians.
+careful=false
+boost_silence=1.0 # Factor by which to boost silence likelihoods in alignment
+realign_iters="1 2 3 4 5 6 7 8 9 10 12 14 16 18 20 23 26 29 32 35 38"
+config= # name of config file.
+stage=-4
+power=0.5 # exponent to determine number of gaussians from occurrence counts
+norm_vars=false # deprecated, prefer --cmvn-opts "--norm-vars=false"
+cmvn_opts=  # can be used to add extra options to cmvn.
+delta_opts= # can be used to add extra options to add-deltas
+# End configuration section.
+
+1. Changed totgauss(TargetGaussians) to 2000
+2. Changed power(exponent to determine number of gaussians from occurrence counts) to 0.5
+
+Best result:
+WER: 51.1 // Confirm and copy output @Saksham
+
+// Add some other configurations for comparision as ma'am pointed to show the grid search perspective @Saksham
+
+
+Task 2
+
+(a) Meaning of _B, _E, _I, _S
+
+There are a number of files in data/lang/phones/ that specify various things about the phone set.
+
+As one can see in data/lang/phones/word_boundary.txt, for a phone 'a' we have
+a_B begin
+a_E end
+a_I internal
+a_S singleton
+
+The symbols B,E,I,S represent different positions of the phones in the word.
+
+B - starting of word
+E - ending of word
+I - in between other phones in a word
+S - Standalone phones where a word consists of only one phone
+
+Reference: https://kaldi-asr.org/doc/data_prep.html
+
+(b) Phones that start with the special symbol “#
+
+These represent the disambiguation symbols.
+
+Will write later @Ansh
+
+Task 3
+
+These paramters are numleaves and 
+
+
+Optimal arguments for train_delas.sh: 5000 7000
+
+
+Results for different parameters
+numleaves	totgauss	Result
+2500		30000 		%WER 48.08 
+3000		7000		-
+3000		15000		-
+5000		5000		%WER 46.25
+
+
+
+* To be confirmed with code *
+
+The two paramters taken by train_deltas.sh is
+1. Number of leaves in the decision tree: This parameter defines the number of sets of states that will be sharing the same likelihood model. That is for tying X Triphone models which have the middle monophone as M, if number of leaves are K, these X states (left context/right context..) will be partitioned K sets which share the same GMM parameters.
+
+2. Total number of Gaussians: This is the sum of over all GMM likelihood models over all tied states of the Tied-State HMM model.
+That is, if there are x sets of tied-states, where each tied-state set shares a y component GMM - Total number of Gaussians = x*y
+
+
+
+Task 4
+
+
+// Re-do with updated best parameters
+// Have to improve upon this
+// Report perplexity too
+
+
+We tried several smoothing models but all lead to performance reductions. The following were the various models and corresponding commands
+4-gram Kneser-ney (modified) smoothed model
+ngram-count -read grams.txt -order 4 -lm demolm.lm -kndiscount1 -kndiscount2 -kndiscount3 -kndiscount4
+WER --> 48.81%
+
+Then we tried 4-gram Kneser-ney (modified) smoothed model with interpolation
+ngram-count -read grams.txt -order 4 -lm demolm.lm -kndiscount1 -kndiscount2 -kndiscount3 -kndiscount4 -interpolation 4
+WER --> 48.35%
+
+We also tried written bell smoothing 3-gram
+ngram-count -read grams.txt -lm demolm.lm -wbdiscount1 -wbdiscount2 -wbdiscount3
+WER --> 48.45%
+
+Finally we tried 2-gram Kneser-ney with interpolation
+ngram-count -read grams.txt -order 2 -lm demolm.lm -kndiscount1 -kndiscount2 -interpolate 2
+WER--> 48.26%
+
+
+Task 5
+
+
+
+Task 6
+
+
+// Note that this output has to be changed according to the LM of task 4
+
+(g) %WER 43.72 [ 317 / 725, 17 in , 64 del, 236  ub ] exp/mono/decode_te t/werg_8
+(l) %WER 76.60 [ 144 / 188, 2 in , 37 del, 105  ub ] exp/mono/decode_te t/werl_7
+(m) %WER 60.42 [ 58 / 96, 2 in , 17 del, 39  ub ] exp/mono/decode_te t/werm_9
+(n) %WER 64.71 [ 55 / 85, 3 in , 13 del, 39  ub ] exp/mono/decode_te t/wern_7
+
+The highest WER is reported for the  (l) class of audio files. This is expected since l corresponds to very-noisy data (utterance is very noisy) and thus the corresponding output by our model will be inaccurate. The best (lowest) WER has been reported for (g) - good quality audio files (utterance is good), thus the model performs better on this data since it is easier for the model to give correct predictions on less noisy inputs.
+
+
+Task 7
+@Saksham
+
+Task 8
+@Aman
