@@ -7,7 +7,10 @@ Aman Kansal  170050027
 Ansh Khurana 170050035
 Saksham Goel 170050045
 
-Note: All the results have been obtained on Ubuntu 18.04 LTS and Intel 64 bit processors
+Note: 
+To run model which uses swahili.big.arpa, set stage=5 in run.sh. By default the script does not run stage 5.
+
+All the results have been obtained on Ubuntu 18.04 LTS and Intel 64 bit processors
 
 Task 1
 
@@ -37,10 +40,46 @@ delta_opts= # can be used to add extra options to add-deltas
 2. Changed power(exponent to determine number of gaussians from occurrence counts) to 0.5
 
 Best result:
-WER: 51.1 // Confirm and copy output @Saksham
+WER: 51.10 
 
-// Add some other configurations for comparision as ma'am pointed to show the grid search perspective @Saksham
+## Trial 1
+- Gaussians = 2000
 
+### Results
+- WER = 53.11
+
+## Trial 2
+- Gaussians = 2000
+- Iterations = 80
+- Iterations till Gaussians increase = 60
+- Data alignment passes extrapolated
+
+### Results
+- WER = 52.47
+
+## Trial 3
+- Gaussians = 2000
+- power = 0.5
+
+### Results
+- WER = 51.10
+
+## Trial 4
+- Gaussians = 2000
+- power = 1.0
+
+### Results
+- WER = 54.39
+
+## Trial 5
+- Gaussians = 2000
+- power = 0.5
+- Iterations = 80
+- Iterations till Gaussians increase = 60
+- Data alignment passes extrapolated
+
+### Results
+- WER = 53.89
 
 Task 2
 
@@ -69,7 +108,7 @@ These are disambiguation symbols.
 
 Disambiguations symbols are added to the Lexicon (L) to make the FST determinizable. Disambiguation symbols are the symbols #1, #2, #3 and so on that are inserted at the end of phonemene sequences in the lexicon. When a phoneme sequence is a prefix of another phoneme sequence in the lexicon, or appears in more than one word, it needs to have one of these symbols added after it. These symbols are needed to ensure that the product L o G is determinizable.
 
-To reflect the changes due to disambiguation symbols in the overall decoded graph, self-loops (identity mapping) labelled with disabiguation symbols are added to H and C and disambiguation symbols in the inputs are replaced with epsilons.
+To reflect the changes due to disambiguation symbols in the overall decoded graph, self-loops (identity mapping) labelled with disambiguation symbols are added to H and C and disambiguation symbols in the inputs are replaced with epsilons.
 
 Reference: Kaldi documentation - https://kaldi-asr.org/doc/graph.html
 
@@ -82,20 +121,14 @@ Optimal arguments for train_delas.sh: 5000 7000
 Results for different parameters
 numleaves	totgauss	Result
 2500		30000 		%WER 48.08 
-3000		7000		-
-3000		15000		-
 5000		5000		%WER 46.25
 5000		7000		%WER 45.61
 5000		9000		%WER 46.53
-6000		10000		-
 
-- @Saksham fill the '-'
 
 These paramters are numleaves and totgauss
 
-* To be confirmed with code *
-
-The two paramters taken by train_deltas.sh is
+The two paramters taken by train_deltas.sh are
 1. Number of leaves in the decision tree: This parameter defines the number of sets of states that will be sharing the same likelihood model. That is for tying X Triphone models which have the middle monophone as M, if number of leaves are K, these X states (left context/right context..) will be partitioned K sets which share the same GMM parameters.
 
 2. Total number of Gaussians: This is the sum of over all GMM likelihood models over all tied states of the Tied-State HMM model.
@@ -103,51 +136,64 @@ That is, if there are x sets of tied-states, where each tied-state set shares a 
 
 Task 4
 
-
-// Re-do with updated best parameters @Aman
-// Have to improve upon this
-// Report perplexity too
-
-
-We tried several smoothing models but all lead to performance reductions. The following were the various models and corresponding commands
+The following were the various models and corresponding commands
 4-gram Kneser-ney (modified) smoothed model
 ngram-count -read grams.txt -order 4 -lm demolm.lm -kndiscount1 -kndiscount2 -kndiscount3 -kndiscount4
-WER --> 48.81%
+WER --> 45.98%; logprob= -2901.229 ppl= 410.8843 ppl1= 852.1854
 
-Then we tried 4-gram Kneser-ney (modified) smoothed model with interpolation
-ngram-count -read grams.txt -order 4 -lm demolm.lm -kndiscount1 -kndiscount2 -kndiscount3 -kndiscount4 -interpolation 4
-WER --> 48.35%
+4-gram Kneser-ney (modified) smoothed model with interpolation
+ngram-count -read grams.txt -order 4 -lm demolm.lm -kndiscount1 -kndiscount2 -kndiscount3 -kndiscount4 -interpolate 4
+WER --> 45.52%; zeroprobs, logprob= -2867.197 ppl= 382.8781 ppl1= 787.3336
 
-We also tried written bell smoothing 3-gram
+written bell smoothing 3-gram
 ngram-count -read grams.txt -lm demolm.lm -wbdiscount1 -wbdiscount2 -wbdiscount3
-WER --> 48.45%
+WER --> 458.8945%
+ppl= 428.3576 ppl1= 892.9216
 
-Finally we tried 2-gram Kneser-ney with interpolation
+2-gram Kneser-ney with interpolation
 ngram-count -read grams.txt -order 2 -lm demolm.lm -kndiscount1 -kndiscount2 -interpolate 2
-WER--> 48.26%
+WER--> 46.80%, zeroprobs, logprob= -2927.522 ppl= 433.9179 ppl1= 905.9274
 
+
+Best Results: 4-gram Kneser-ney (modified) smoothed model with interpolation
+WER: 45.52
+PPL= 382.8781 PPL1= 787.3336
 
 Task 5
 
-LM rescoring is faster.
+LM rescoring is much faster, albeit not exact so the results are slightly worse.
 
+a)
+WER: 41.13
 
+b) Using LM rescoring
+
+WER: 43.33
 
 Task 6
 
-
-// Note that this output has to be changed according to the LM of task 4
-
-(g) %WER 43.72 [ 317 / 725, 17 in , 64 del, 236  ub ] exp/mono/decode_te t/werg_8
-(l) %WER 76.60 [ 144 / 188, 2 in , 37 del, 105  ub ] exp/mono/decode_te t/werl_7
-(m) %WER 60.42 [ 58 / 96, 2 in , 17 del, 39  ub ] exp/mono/decode_te t/werm_9
-(n) %WER 64.71 [ 55 / 85, 3 in , 13 del, 39  ub ] exp/mono/decode_te t/wern_7
+(g) %WER 35.45 [ 257 / 725, 24 ins, 51 del, 182 sub ] exp/tri1/decode_test/werg_13
+(l) %WER 78.19 [ 147 / 188, 4 ins, 70 del, 73 sub ] exp/tri1/decode_test/werl_12
+(m) %WER 45.83 [ 44 / 96, 0 ins, 14 del, 30 sub ] exp/tri1/decode_test/werm_14
+(n) %WER 55.29 [ 47 / 85, 1 ins, 13 del, 33 sub ] exp/tri1/decode_test/wern_10
 
 The highest WER is reported for the  (l) class of audio files. This is expected since l corresponds to very-noisy data (utterance is very noisy) and thus the corresponding output by our model will be inaccurate. The best (lowest) WER has been reported for (g) - good quality audio files (utterance is good), thus the model performs better on this data since it is easier for the model to give correct predictions on less noisy inputs.
 
 
 Task 7
-@Saksham
+
+Assumption: script findword.sh would be run inside the task7 folder.
+It requires the following additional scripts in the same folder to function properly: 
+
+task7
+├── findword.sh
+├── getAudio.py
+└── id2phone.py
+
+From recipe/
+cd task7/
+./findword.sh
 
 Task 8
-@Aman
+
+Uploaded on Kaggle - Team 170050027-170050035-170050045

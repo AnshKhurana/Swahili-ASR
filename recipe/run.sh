@@ -14,7 +14,7 @@
 ###############################################################
 #                   Configuring the ASR pipeline
 ###############################################################
-stage=0    # from which stage should this script start
+stage=1    # from which stage should this script start
 nj=4        # number of parallel jobs to run during training
 test_nj=2    # number of parallel jobs to run during decoding
 # the above two parameters are bounded by the number of speakers in each set
@@ -27,7 +27,7 @@ if [ $stage -le 1 ]; then
   local/prepare_data.sh train test
   local/prepare_dict.sh
   utils/prepare_lang.sh data/local/dict "<UNK>" data/local/lang data/lang
-  local/prepare_lm.sh
+  local/prepare_lm.sh 
 fi
 
 # Feature extraction
@@ -55,18 +55,75 @@ if [ $stage -le 3 ]; then
       exp/mono/graph data/test exp/mono/decode_test
     echo "Monophone decoding done."
     ) &
+    
 fi
 
 # Stage 4: Training tied-state triphone acoustic models
 if [ $stage -le 4 ]; then
   ### Triphone
     echo "Triphone training"
-    # steps/align_si.sh --nj $nj --cmd "$train_cmd" \
-    #    data/train data/lang exp/mono exp/mono_ali
-	# steps/train_deltas.sh --boost-silence 1.25  --cmd "$train_cmd"  \
-	#    2000 20000 data/train data/lang exp/mono_ali exp/tri1
+    steps/align_si.sh --nj $nj --cmd "$train_cmd" \
+       data/train data/lang exp/mono exp/mono_ali
+	steps/train_deltas.sh --boost-silence 1.25  --cmd "$train_cmd"  \
+	   5000 7000 data/train data/lang exp/mono_ali exp/tri1
     echo "Triphone training done"
+
+    echo "Decoding the test set"
+    utils/mkgraph.sh data/lang exp/tri1 exp/tri1/graph
+  
+    # This decode command will need to be modified when you 
+    # want to use tied-state triphone models 
+    steps/decode.sh --nj $test_nj --cmd "$decode_cmd" \
+      exp/tri1/graph data/test exp/tri1/decode_test
+    echo "Triphone decoding done."
+    
 fi
+
+# Stage 5: Decoding tied-state triphone models
+# if [ $stage -le 5 ]; then
+#   (
+#     echo "Decoding the test set"
+#     utils/mkgraph.sh data/lang exp/tri1 exp/tri1/graph
+  
+#     # This decode command will need to be modified when you 
+#     # want to use tied-state triphone models 
+#     steps/decode.sh --nj $test_nj --cmd "$decode_cmd" \
+#       exp/tri1/graph data/test exp/tri1/decode_test
+#     echo "Triphone decoding done."
+#     ) &
+# fi
+
+if [ $stage -le 5 ]; then
+  (
+    echo "Using Big Arpa only"
+    ./path.sh || die "path.sh expected";
+    utils/prepare_lang.sh data/local/dict "<UNK>" data/local/lang data/lang_new
+
+
+    cd corpus/LM
+    cp swahili.big.arpa ../../data/local/
+    cd ..
+    cd ..
+    
+    cd data
+    arpa2fst --disambig-symbol=#0 --read-symbol-table=lang/words.txt \
+      local/swahili.big.arpa lang_new/G.fst
+    cd ..
+    steps/align_si.sh --nj $nj --cmd "$train_cmd" \
+       data/train data/lang_new exp/mono exp/mono_ali
+
+    steps/train_deltas.sh --boost-silence 1.25  --cmd "$train_cmd"  \
+	   5000 7000 data/train data/lang_new exp/mono_ali exp/tri1
+       
+    utils/mkgraph.sh data/lang_new exp/tri1 exp/tri1/graph
+    # This decode command will need to be modified when you 
+    # want to use tied-state triphone models 
+    steps/decode.sh --nj $test_nj --cmd "$decode_cmd" \
+      exp/tri1/graph data/test exp/tri1/decode_test_bigarpa
+    echo "Triphone decoding done."
+    ) &
+fi
+
 
 wait;
 #score
