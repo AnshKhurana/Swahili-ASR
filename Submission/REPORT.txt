@@ -1,9 +1,13 @@
-Note: All the results have been obtained on Ubuntu 18.04 LTS and Intel 64 bit processors
+CS 753 Assignment2: Automatically Recognizing Swahili
+
+
 Team Members
 
 Aman Kansal  170050027
 Ansh Khurana 170050035
 Saksham Goel 170050045
+
+Note: All the results have been obtained on Ubuntu 18.04 LTS and Intel 64 bit processors
 
 Task 1
 
@@ -61,13 +65,15 @@ Reference: https://kaldi-asr.org/doc/data_prep.html
 
 (b) Phones that start with the special symbol “#
 
-These represent the disambiguation symbols.
+These are disambiguation symbols.
 
-Will write later @Ansh
+Disambiguations symbols are added to the Lexicon (L) to make the FST determinizable. Disambiguation symbols are the symbols #1, #2, #3 and so on that are inserted at the end of phonemene sequences in the lexicon. When a phoneme sequence is a prefix of another phoneme sequence in the lexicon, or appears in more than one word, it needs to have one of these symbols added after it. These symbols are needed to ensure that the product L o G is determinizable.
+
+To reflect the changes due to disambiguation symbols in the overall decoded graph, self-loops (identity mapping) labelled with disabiguation symbols are added to H and C and disambiguation symbols in the inputs are replaced with epsilons.
+
+Reference: Kaldi documentation - https://kaldi-asr.org/doc/graph.html
 
 Task 3
-
-These paramters are numleaves and 
 
 
 Optimal arguments for train_delas.sh: 5000 7000
@@ -84,6 +90,8 @@ numleaves	totgauss	Result
 6000		10000		-
 
 - @Saksham fill the '-'
+
+These paramters are numleaves and totgauss
 
 * To be confirmed with code *
 
