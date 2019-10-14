@@ -1,2 +1,2 @@
-# CS753-Assignment-2
+# Swahili-ASR
 ASR System for Swahili
